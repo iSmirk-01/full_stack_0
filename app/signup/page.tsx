@@ -4,11 +4,13 @@ import { useState } from "react";
 import { Mail } from "lucide-react";
 import { Lock } from "lucide-react";
 import FormButton from "@/components/ui/FormButton";
+import { useRouter } from "next/navigation";
 
 function Page() {
   const [error, setError] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -28,6 +30,7 @@ function Page() {
 
       if (response.ok) {
         setMessage(data.success)
+        router.push("/");
       } else if (!response.ok) {
         setError(data.error);
         return;

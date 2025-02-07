@@ -4,7 +4,7 @@ import FormButton from "@/components/ui/FormButton"
 import { useState } from "react";
 import { Mail } from "lucide-react";
 import { Lock } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 
 
 function Login() {
@@ -12,6 +12,7 @@ function Login() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [message, setMessage] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter()
 
 
     async function handleSubmit(e: React.FormEvent) {
@@ -31,6 +32,7 @@ function Login() {
             const data = await response.json()
             if (response.ok) {
                 setMessage(data.success);
+                router.push("/")
             } else if (!response.ok) {
                 setError(data.error);
             }
