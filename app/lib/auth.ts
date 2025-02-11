@@ -1,27 +1,28 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import { betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { prisma } from "@/app/lib/prisma";
+import { admin } from "better-auth/plugins";
 
-const SECRET = process.env.JWT_SECRET || "SECRET!@#";
-
-//helper functions for auth
-
-interface TokenPayload {
-  id: string;
-  role: string
-}
-
-export const hashPassword = async (password: string) => {
-  return await bcrypt.hash(password, 10);
-};
-
-export const comparePasswords = async (password: string, hash: string) => {
-  return await bcrypt.compare(password, hash);
-};
-
-export const signToken = (id: string, role: string) => {
-  return jwt.sign({ id, role }, SECRET, { expiresIn: "1d" });
-};
-
-export const verifyToken = (token: string): TokenPayload | null => {
-  return jwt.verify(token, SECRET) as TokenPayload;
-};
+export const auth = betterAuth({
+  database: prismaAdapter(prisma, {
+    provider: "postgresql",
+  }),
+  emailAndPassword: {
+    enabled: true,
+  },
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    },
+  },
+  plugins: [
+    admin()
+  ],
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60,
+    }
+  },
+});

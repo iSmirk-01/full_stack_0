@@ -2,13 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-input:-webkit-autofill {
-  background-color: transparent !important; /* Keeps it same as normal input */
-  -webkit-box-shadow: 0 0 0px 1000px #1e293b inset !important; /* Change background color */
-  -webkit-text-fill-color: white !important; /* Change text color */
-}
-input:-webkit-autofill:focus {
-  -webkit-text-fill-color: white !important; /* Ensure text remains white when focused */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-box-shadow: 0 0 0px 1000px var(--input-box-shadow-color, #ffffff00) inset;
 }
 
 body {

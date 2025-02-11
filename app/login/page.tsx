@@ -6,14 +6,12 @@ import { Mail } from "lucide-react";
 import { Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-
 function Login() {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [message, setMessage] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter()
-
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();

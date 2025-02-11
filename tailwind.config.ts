@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
   	extend: {
+		boxShadow: {
+			innerColor: '0 0 0px 1000px #34159 inset',
+		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
